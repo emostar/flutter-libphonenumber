@@ -1,0 +1,17 @@
+name: libphonenumber
+description: Simple implementation of libphonenumber
+version: 0.0.1
+author: Jon Keating <jon@licq.org>
+homepage: https://github.com/emostar/flutter-libphonenumber
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+flutter:
+  plugin:
+    androidPackage: com.codeheadlabs.libphonenumber
+    pluginClass: LibphonenumberPlugin
+
+environment:
+  sdk: ">=1.19.0 <3.0.0"
