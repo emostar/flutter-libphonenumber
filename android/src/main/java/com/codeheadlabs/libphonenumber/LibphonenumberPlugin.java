@@ -1,4 +1,4 @@
-package com.mathrawk.libphonenumber;
+package com.codeheadlabs.libphonenumber;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
