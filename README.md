@@ -1,6 +1,7 @@
 # libphonenumber
 
-Simple implementation of libphonenumber
+This is a Flutter implementation of libphonenumber. It includes only a few
+features at the moment, and are added when more functionality is desired.
 
 ## Getting Started
 
