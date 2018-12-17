@@ -24,7 +24,7 @@
     NSString *isoCode = call.arguments[@"iso_code"];
     NBPhoneNumber *number = nil;
     if (phoneNumber != nil) {
-        number = [self.phoneUtil parse:call.arguments[@"phone"] defaultRegion:isoCode error:&err];
+        number = [self.phoneUtil parse:phoneNumber defaultRegion:isoCode error:&err];
         if (err != nil) {
             result([FlutterError errorWithCode:@"invalid_phone_number" message:@"Invalid Phone Number" details:nil]);
             return;
@@ -48,7 +48,7 @@
         result(normalizedNumber);
     } else if ([@"getRegionInfo" isEqualToString:call.method]) {
         NSString *regionCode = [self.phoneUtil getRegionCodeForNumber:number];
-        NSString *countryCode = [self.phoneUtil getCountryCodeForRegion:regionCode];
+        NSNumber *countryCode = [self.phoneUtil getCountryCodeForRegion:regionCode];
         NSString *formattedNumber = [self.phoneUtil format:number
                                               numberFormat:NBEPhoneNumberFormatNATIONAL
                                                      error:&err];
