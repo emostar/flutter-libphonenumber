@@ -61,7 +61,7 @@
         
         result(@{
                  @"isoCode": regionCode == nil ? @"" : regionCode,
-                 @"regionCode": countryCode == nil ? @"" : countryCode,
+                 @"regionCode": countryCode == nil ? @"" : [countryCode stringValue],
                  @"formattedPhoneNumber": formattedNumber == nil ? @"" : formattedNumber,
                  });
     } else {
