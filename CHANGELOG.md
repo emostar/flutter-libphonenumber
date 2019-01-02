@@ -1,3 +1,7 @@
+## 0.0.4
+
+* Another iOS fix, this time for getRegionInfo
+
 ## 0.0.3
 
 * iOS fix for parsing phone numbers
