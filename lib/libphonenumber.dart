@@ -54,4 +54,14 @@ class PhoneNumberUtil {
       formattedPhoneNumber: result['formattedPhoneNumber'],
     );
   }
+
+  static Future<String> formatAsYouType({
+    @required String phoneNumber,
+    @required String isoCode,
+  }) async {
+    return await _channel.invokeMethod('formatAsYouType', {
+      'phone_number': phoneNumber,
+      'iso_code': isoCode,
+    });
+  }
 }

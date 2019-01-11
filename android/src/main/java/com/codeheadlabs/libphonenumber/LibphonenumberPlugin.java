@@ -6,6 +6,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.NumberParseException;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
@@ -36,6 +37,9 @@ public class LibphonenumberPlugin implements MethodCallHandler {
         break;
       case "getRegionInfo":
         handleGetRegionInfo(call, result);
+        break;
+      case "formatAsYouType":
+        formatAsYouType(call, result);
         break;
       default:
         result.notImplemented();
@@ -86,5 +90,17 @@ public class LibphonenumberPlugin implements MethodCallHandler {
     } catch (NumberParseException e) {
       result.error("NumberParseException", e.getMessage(), null);
     }
+  }
+
+  private void formatAsYouType(MethodCall call, Result result) {
+    final String phoneNumber = call.argument("phone_number");
+    final String isoCode = call.argument("iso_code");
+
+    AsYouTypeFormatter asYouTypeFormatter = phoneUtil.getAsYouTypeFormatter(isoCode.toUpperCase());
+    String res = null;
+    for (int i = 0; i < phoneNumber.length(); i++) {
+      res = asYouTypeFormatter.inputDigit(phoneNumber.charAt(i));
+    }
+    result.success(res);
   }
 }
