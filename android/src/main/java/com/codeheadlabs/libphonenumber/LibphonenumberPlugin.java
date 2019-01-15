@@ -37,6 +37,9 @@ public class LibphonenumberPlugin implements MethodCallHandler {
       case "getRegionInfo":
         handleGetRegionInfo(call, result);
         break;
+      case "getNumberType":
+        handleGetNumberType(call, result);
+        break;
       default:
         result.notImplemented();
         break;
@@ -83,6 +86,19 @@ public class LibphonenumberPlugin implements MethodCallHandler {
       resultMap.put("regionCode", countryCode);
       resultMap.put("formattedPhoneNumber", formattedNumber);
       result.success(resultMap);
+    } catch (NumberParseException e) {
+      result.error("NumberParseException", e.getMessage(), null);
+    }
+  }
+
+  private void handleGetNumberType(MethodCall call, Result result) {
+    final String phoneNumber = call.argument("phone_number");
+    final String isoCode = call.argument("iso_code");
+
+    try {
+      Phonenumber.PhoneNumber p = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
+      PhoneNumberUtil.PhoneNumberType t = phoneUtil.getNumberType(p);
+      result.success(t);
     } catch (NumberParseException e) {
       result.error("NumberParseException", e.getMessage(), null);
     }
