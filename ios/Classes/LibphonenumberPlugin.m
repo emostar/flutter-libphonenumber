@@ -64,6 +64,9 @@
                  @"regionCode": countryCode == nil ? @"" : [countryCode stringValue],
                  @"formattedPhoneNumber": formattedNumber == nil ? @"" : formattedNumber,
                  });
+    } else if ([@"getNumberType" isEqualToString:call.method]) {
+        NSNumber *numberType = [NSNumber numberWithInteger:[self.phoneUtil getNumberType:number]];
+        result(numberType);
     } else {
         result(FlutterMethodNotImplemented);
     }
