@@ -98,7 +98,45 @@ public class LibphonenumberPlugin implements MethodCallHandler {
     try {
       Phonenumber.PhoneNumber p = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
       PhoneNumberUtil.PhoneNumberType t = phoneUtil.getNumberType(p);
-      result.success(t);
+
+      switch (t) {
+        case FIXED_LINE:
+          result.success(0);
+          break;
+        case MOBILE:
+          result.success(1);
+          break;
+        case FIXED_LINE_OR_MOBILE:
+          result.success(2);
+          break;
+        case TOLL_FREE:
+          result.success(3);
+          break;
+        case PREMIUM_RATE:
+          result.success(4);
+          break;
+        case SHARED_COST:
+          result.success(5);
+          break;
+        case VOIP:
+          result.success(6);
+          break;
+        case PERSONAL_NUMBER:
+          result.success(7);
+          break;
+        case PAGER:
+          result.success(8);
+          break;
+        case UAN:
+          result.success(9);
+          break;
+        case VOICEMAIL:
+          result.success(10);
+          break;
+        case UNKNOWN:
+          result.success(-1);
+          break;
+      }
     } catch (NumberParseException e) {
       result.error("NumberParseException", e.getMessage(), null);
     }
