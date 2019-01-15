@@ -16,6 +16,21 @@ class RegionInfo {
   }
 }
 
+enum PhoneNumberType {
+  fixedLine,
+  mobile,
+  fixedLineOrMobile,
+  tollFree,
+  premiumRate,
+  sharedCost,
+  voip,
+  personalNumber,
+  pager,
+  uan,
+  voicemail,
+  unknown
+}
+
 class PhoneNumberUtil {
   static const MethodChannel _channel = const MethodChannel('codeheadlabs.com/libphonenumber');
 
@@ -53,5 +68,43 @@ class PhoneNumberUtil {
       isoCode: result['isoCode'],
       formattedPhoneNumber: result['formattedPhoneNumber'],
     );
+  }
+
+  static Future<PhoneNumberType> getNumberType({
+    @required String phoneNumber,
+    @required String isoCode,
+  }) async {
+    int result = await _channel.invokeMethod('getNumberType', {
+      'phone_number': phoneNumber,
+      'iso_code': isoCode,
+    });
+
+    switch (result) {
+      case 0:
+        return PhoneNumberType.fixedLine;
+      case 1:
+        return PhoneNumberType.mobile;
+      case 2:
+        return PhoneNumberType.fixedLineOrMobile;
+      case 3:
+        return PhoneNumberType.tollFree;
+      case 4:
+        return PhoneNumberType.premiumRate;
+      case 5:
+        return PhoneNumberType.sharedCost;
+      case 6:
+        return PhoneNumberType.voip;
+      case 7:
+        return PhoneNumberType.personalNumber;
+      case 8:
+        return PhoneNumberType.pager;
+      case 9:
+        return PhoneNumberType.uan;
+      case 10:
+        return PhoneNumberType.voicemail;
+      default:
+        // unknown is -1 and default
+        return PhoneNumberType.unknown;
+    }
   }
 }
