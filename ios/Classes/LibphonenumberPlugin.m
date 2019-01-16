@@ -25,6 +25,7 @@
     NSString *isoCode = call.arguments[@"iso_code"];
     NBPhoneNumber *number = nil;
 
+    // Call formatAsYouType before parse below because a partial number will not be parsable.
     if ([@"formatAsYouType" isEqualToString:call.method]) {
         NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:isoCode];
         result([f inputString:phoneNumber]);
