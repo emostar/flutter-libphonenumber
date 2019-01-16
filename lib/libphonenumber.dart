@@ -78,33 +78,9 @@ class PhoneNumberUtil {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
     });
-
-    switch (result) {
-      case 0:
-        return PhoneNumberType.fixedLine;
-      case 1:
-        return PhoneNumberType.mobile;
-      case 2:
-        return PhoneNumberType.fixedLineOrMobile;
-      case 3:
-        return PhoneNumberType.tollFree;
-      case 4:
-        return PhoneNumberType.premiumRate;
-      case 5:
-        return PhoneNumberType.sharedCost;
-      case 6:
-        return PhoneNumberType.voip;
-      case 7:
-        return PhoneNumberType.personalNumber;
-      case 8:
-        return PhoneNumberType.pager;
-      case 9:
-        return PhoneNumberType.uan;
-      case 10:
-        return PhoneNumberType.voicemail;
-      default:
-        // unknown is -1 and default
-        return PhoneNumberType.unknown;
+    if (result == -1) {
+      return PhoneNumberType.unknown;
     }
+    return PhoneNumberType.values[result];    
   }
 }
