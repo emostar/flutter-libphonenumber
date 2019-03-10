@@ -32,7 +32,7 @@
     }
 
     if ([@"isPossiblePhoneNumber" isEqualToString:call.method]) {
-        NSNumber *possibleNumber = [NSNumber numberWithBool:[self.phoneUtil isPossiblePhoneNumber:number]];
+        NSNumber *possibleNumber = [NSNumber numberWithBool:[self.phoneUtil isPossibleNumber:number]];
         result(possibleNumber);
     } else if ([@"isValidPhoneNumber" isEqualToString:call.method]) {
         NSNumber *validNumber = [NSNumber numberWithBool:[self.phoneUtil isValidNumber:number]];
