@@ -58,7 +58,7 @@ public class LibphonenumberPlugin implements MethodCallHandler {
     }
   }
 
-  private void handleIsValidPhoneNumber(MethodCall call, Result result) {
+  private void handleIsPossiblePhoneNumber(MethodCall call, Result result) {
     final String phoneNumber = call.argument("phone_number");
     final String isoCode = call.argument("iso_code");
 
