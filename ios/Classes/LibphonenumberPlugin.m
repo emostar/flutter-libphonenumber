@@ -31,7 +31,10 @@
         }
     }
 
-    if ([@"isValidPhoneNumber" isEqualToString:call.method]) {
+    if ([@"isPossiblePhoneNumber" isEqualToString:call.method]) {
+        NSNumber *possibleNumber = [NSNumber numberWithBool:[self.phoneUtil isPossiblePhoneNumber:number]];
+        result(possibleNumber);
+    } else if ([@"isValidPhoneNumber" isEqualToString:call.method]) {
         NSNumber *validNumber = [NSNumber numberWithBool:[self.phoneUtil isValidNumber:number]];
         result(validNumber);
     } else if ([@"normalizePhoneNumber" isEqualToString:call.method]) {
