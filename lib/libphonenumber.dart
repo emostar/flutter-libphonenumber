@@ -29,6 +29,16 @@ class PhoneNumberUtil {
     });
   }
 
+  static Future<bool> isPossiblePhoneNumber({
+    @required String phoneNumber,
+    @required String isoCode,
+  }) async {
+    return await _channel.invokeMethod('isPossiblePhoneNumber', {
+      'phone_number': phoneNumber,
+      'iso_code': isoCode,
+    });
+  }
+
   static Future<String> normalizePhoneNumber({
     @required String phoneNumber,
     @required String isoCode,
