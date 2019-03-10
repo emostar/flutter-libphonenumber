@@ -31,6 +31,9 @@ public class LibphonenumberPlugin implements MethodCallHandler {
       case "isValidPhoneNumber":
         handleIsValidPhoneNumber(call, result);
         break;
+      case "isPossiblePhoneNumber":
+        handleIsPossiblePhoneNumber(call, result);
+        break;
       case "normalizePhoneNumber":
         handleNormalizePhoneNumber(call, result);
         break;
@@ -50,6 +53,18 @@ public class LibphonenumberPlugin implements MethodCallHandler {
     try {
       Phonenumber.PhoneNumber p = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
       result.success(phoneUtil.isValidNumber(p));
+    } catch (NumberParseException e) {
+      result.error("NumberParseException", e.getMessage(), null);
+    }
+  }
+
+  private void handleIsValidPhoneNumber(MethodCall call, Result result) {
+    final String phoneNumber = call.argument("phone_number");
+    final String isoCode = call.argument("iso_code");
+
+    try {
+      Phonenumber.PhoneNumber p = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
+      result.success(phoneUtil.isPossibleNumber(p));
     } catch (NumberParseException e) {
       result.error("NumberParseException", e.getMessage(), null);
     }
