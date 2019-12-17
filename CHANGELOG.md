@@ -1,3 +1,8 @@
+## 1.0.1 (20191217)
+
+* Add format as you type (https://github.com/emostar/flutter-libphonenumber/pull/3)
+* Add getNumberType (https://github.com/emostar/flutter-libphonenumber/pull/4)
+
 ## 1.0.0
 
 * AndroidX support
