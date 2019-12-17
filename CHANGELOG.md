@@ -1,3 +1,8 @@
+## 1.0.0
+
+* AndroidX support
+* Bump libphonenumber java dep to latest version
+
 ## 0.0.4
 
 * Another iOS fix, this time for getRegionInfo

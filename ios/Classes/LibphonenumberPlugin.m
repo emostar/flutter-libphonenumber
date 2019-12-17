@@ -1,6 +1,7 @@
 #import "LibphonenumberPlugin.h"
 
 #import "NBPhoneNumberUtil.h"
+#import "NBAsYouTypeFormatter.h"
 
 @interface LibphonenumberPlugin ()
 @property(nonatomic, retain) NBPhoneNumberUtil *phoneUtil;
@@ -23,6 +24,14 @@
     NSString *phoneNumber = call.arguments[@"phone_number"];
     NSString *isoCode = call.arguments[@"iso_code"];
     NBPhoneNumber *number = nil;
+
+    // Call formatAsYouType before parse below because a partial number will not be parsable.
+    if ([@"formatAsYouType" isEqualToString:call.method]) {
+        NBAsYouTypeFormatter *f = [[NBAsYouTypeFormatter alloc] initWithRegionCode:isoCode];
+        result([f inputString:phoneNumber]);
+        return;
+    }
+    
     if (phoneNumber != nil) {
         number = [self.phoneUtil parse:phoneNumber defaultRegion:isoCode error:&err];
         if (err != nil) {
