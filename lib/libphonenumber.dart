@@ -44,15 +44,25 @@ class PhoneNumberUtil {
     });
   }
 
-  static Future<String> normalizePhoneNumber({
+  static Future<String> getNameForNumber({
     @required String phoneNumber,
     @required String isoCode,
   }) async {
-    return await _channel.invokeMethod('normalizePhoneNumber', {
+    return await _channel.invokeMethod('getNameForNumber', {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
     });
   }
+
+  static Future<String> normalizePhoneNumber({
+      @required String phoneNumber,
+      @required String isoCode,
+    }) async {
+      return await _channel.invokeMethod('normalizePhoneNumber', {
+        'phone_number': phoneNumber,
+        'iso_code': isoCode,
+      });
+    }
 
   static Future<RegionInfo> getRegionInfo({
     @required String phoneNumber,
