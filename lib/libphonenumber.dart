@@ -38,10 +38,15 @@ class PhoneNumberUtil {
     @required String phoneNumber,
     @required String isoCode,
   }) async {
-    return await _channel.invokeMethod('isValidPhoneNumber', {
-      'phone_number': phoneNumber,
-      'iso_code': isoCode,
-    });
+    try {
+      return await _channel.invokeMethod('isValidPhoneNumber', {
+        'phone_number': phoneNumber,
+        'iso_code': isoCode,
+      });
+    } catch (e) {
+      // Sometimes invalid phone numbers can cause exceptions, e.g. "+1"
+      return false;
+    }
   }
 
   static Future<String> normalizePhoneNumber({
