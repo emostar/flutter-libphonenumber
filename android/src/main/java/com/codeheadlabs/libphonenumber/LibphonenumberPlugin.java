@@ -40,6 +40,7 @@ public class LibphonenumberPlugin implements MethodCallHandler {
         break;
       case "getNumberType":
         handleGetNumberType(call, result);
+        break;
       case "formatAsYouType":
         formatAsYouType(call, result);
         break;
