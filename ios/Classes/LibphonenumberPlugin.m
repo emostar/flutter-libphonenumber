@@ -76,6 +76,9 @@
     } else if ([@"getNumberType" isEqualToString:call.method]) {
         NSNumber *numberType = [NSNumber numberWithInteger:[self.phoneUtil getNumberType:number]];
         result(numberType);
+    } else if([@"getNameForNumber" isEqualToString:call.method]) {
+        NSString *name = @"";
+        result(name);
     } else {
         result(FlutterMethodNotImplemented);
     }
