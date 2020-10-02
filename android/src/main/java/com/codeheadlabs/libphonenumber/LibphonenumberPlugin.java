@@ -8,17 +8,20 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 /** LibphonenumberPlugin */
 public class LibphonenumberPlugin implements MethodCallHandler {
   private static PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+  private static PhoneNumberToCarrierMapper phoneNumberToCarrierMapper = PhoneNumberToCarrierMapper.getInstance();
 
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
@@ -44,9 +47,23 @@ public class LibphonenumberPlugin implements MethodCallHandler {
       case "formatAsYouType":
         formatAsYouType(call, result);
         break;
+      case "getNameForNumber":
+        handleGetNameForNumber(call, result);
       default:
         result.notImplemented();
         break;
+    }
+  }
+
+  private void handleGetNameForNumber(MethodCall call, Result result) {
+    final String phoneNumber = call.argument("phone_number");
+    final String isoCode = call.argument("iso_code");
+
+    try {
+      Phonenumber.PhoneNumber p = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
+      result.success(phoneNumberToCarrierMapper.getNameForNumber(p, Locale.getDefault()));
+    } catch (NumberParseException e) {
+      result.error("NumberParseException", e.getMessage(), null);
     }
   }
 
