@@ -48,6 +48,7 @@ public class LibphonenumberPlugin implements MethodCallHandler {
         break;
       case "getNameForNumber":
         handleGetNameForNumber(call, result);
+        break;
       default:
         result.notImplemented();
         break;
