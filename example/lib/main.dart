@@ -15,6 +15,7 @@ class _MyAppState extends State<MyApp> {
   bool _isValid = false;
   String _normalized = '';
   RegionInfo _regionInfo;
+  String _carrierName = '';
 
   @override
   void dispose() {
@@ -31,11 +32,14 @@ class _MyAppState extends State<MyApp> {
         phoneNumber: s, isoCode: 'US');
     RegionInfo regionInfo =
         await PhoneNumberUtil.getRegionInfo(phoneNumber: s, isoCode: 'US');
+    String carrierName =
+        await PhoneNumberUtil.getNameForNumber(phoneNumber: s, isoCode: 'US');
 
     setState(() {
       _isValid = isValid;
       _normalized = normalizedNumber;
       _regionInfo = regionInfo;
+      _carrierName = carrierName;
     });
   }
 
@@ -95,6 +99,19 @@ class _MyAppState extends State<MyApp> {
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
                 'Prefix=${_regionInfo?.regionPrefix}, ISO=${_regionInfo?.isoCode}, Formatted=${_regionInfo?.formattedPhoneNumber}',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Carrier'),
+            Padding(
+              padding: EdgeInsets.only(left: 12.0),
+              child: Text(
+                'Carrier Name=${_carrierName}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
