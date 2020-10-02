@@ -1,3 +1,8 @@
+## 1.0.2 (20201001)
+
+* Add getNameFromNumber to get the carrier name for a phone number (carrier java dep 1.136)
+* Update libphonenumber java dep to latest version (8.10.12)
+
 ## 1.0.1 (20191217)
 
 * Add format as you type (https://github.com/emostar/flutter-libphonenumber/pull/3)
