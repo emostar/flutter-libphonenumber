@@ -1,18 +1,22 @@
 name: libphonenumber
 description: This is a Flutter implementation of libphonenumber. It includes only a few features at the moment, and are added when more functionality is desired.
-version: 1.0.1
-author: Jon Keating <jon@licq.org>
+version: 1.0.2
 homepage: https://github.com/emostar/flutter-libphonenumber
 
 dependencies:
   flutter:
     sdk: flutter
-  built_value:
+  meta: ^1.2.3
 
 flutter:
   plugin:
-    androidPackage: com.codeheadlabs.libphonenumber
-    pluginClass: LibphonenumberPlugin
+    platforms:
+      android:
+        package: com.codeheadlabs.libphonenumber
+        pluginClass: LibphonenumberPlugin
+      ios:
+        pluginClass: LibphonenumberPlugin
 
 environment:
   sdk: ">=1.19.0 <3.0.0"
+  flutter: ">=1.12.0 <2.0.0"
