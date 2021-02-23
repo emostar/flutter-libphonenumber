@@ -122,10 +122,14 @@ class PhoneNumberUtil {
     @required PhoneNumberFormat format,
   }) async {
     final String formatString = format?.toString();
+    if(formatString == null || formatString.isEmpty) {
+      return phoneNumber;
+    }
+
     return await _channel.invokeMethod('format', {
           'phone_number': phoneNumber,
           'iso_code': isoCode,
-          'format': formatString?.substring(formatString?.indexOf('.'))
+          'format': formatString.substring(formatString.indexOf('.') + 1)
     });
   }
 }
