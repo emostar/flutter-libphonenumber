@@ -16,6 +16,13 @@ class RegionInfo {
   }
 }
 
+enum PhoneNumberFormat {
+    E164,
+    INTERNATIONAL,
+    NATIONAL,
+    RFC3966
+}
+
 enum PhoneNumberType {
   fixedLine,
   mobile,
@@ -106,6 +113,19 @@ class PhoneNumberUtil {
     return await _channel.invokeMethod('formatAsYouType', {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
+    });
+  }
+
+  static Future<String> format({
+    @required String phoneNumber,
+    @required String isoCode,
+    @required PhoneNumberFormat format,
+  }) async {
+    final String formatString = format?.toString();
+    return await _channel.invokeMethod('format', {
+          'phone_number': phoneNumber,
+          'iso_code': isoCode,
+          'format': formatString?.substring(formatString?.indexOf('.'))
     });
   }
 }

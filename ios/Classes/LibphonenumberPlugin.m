@@ -23,6 +23,7 @@
     
     NSString *phoneNumber = call.arguments[@"phone_number"];
     NSString *isoCode = call.arguments[@"iso_code"];
+    NSString *format = call.arguments[@"format"];
     NBPhoneNumber *number = nil;
 
     // Call formatAsYouType before parse below because a partial number will not be parsable.
@@ -79,6 +80,15 @@
     } else if([@"getNameForNumber" isEqualToString:call.method]) {
         NSString *name = @"";
         result(name);
+    } else if([@"format" isEqualToString:call.method]) {
+        NSString *format = [self.phoneUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&err];
+        if (err != nil ) {
+            result([FlutterError errorWithCode:@"format_error"
+                                       message:@"Either specified phone number or format is invalid"
+                                       details:nil]);
+            return;
+        }
+        result(format);
     } else {
         result(FlutterMethodNotImplemented);
     }
