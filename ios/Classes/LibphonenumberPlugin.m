@@ -81,7 +81,7 @@
         NSString *name = @"";
         result(name);
     } else if([@"format" isEqualToString:call.method]) {
-        NSString *format = [self.phoneUtil format:phoneNumber numberFormat:NBEPhoneNumberFormatNATIONAL error:&err];
+        NSString *format = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatNATIONAL error:&err];
         if (err != nil ) {
             result([FlutterError errorWithCode:@"format_error"
                                        message:@"Either specified phone number or format is invalid"
