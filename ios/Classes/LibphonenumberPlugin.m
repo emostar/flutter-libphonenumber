@@ -82,13 +82,13 @@
         result(name);
     } else if ([@"format" isEqualToString:call.method]) {
         NSString *formattedNumber;
-        if (@"NATIONAL" isEqualToString:formatEnumString) {
+        if ([@"NATIONAL" isEqualToString:formatEnumString]) {
             formattedNumber = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatNATIONAL error:&err];
-        } else if(@"INTERNATIONAL" isEqualToString:formatEnumString) {
+        } else if([@"INTERNATIONAL" isEqualToString:formatEnumString]) {
             formattedNumber = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatINTERNATIONAL error:&err];
-        } else if(@"E164" isEqualToString:formatEnumString) {
+        } else if([@"E164" isEqualToString:formatEnumString]) {
             formattedNumber = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatE164 error:&err];
-        } else if(@"RFC3966" isEqualToString:formatEnumString) {
+        } else if([@"RFC3966" isEqualToString:formatEnumString]) {
             formattedNumber = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatRFC3966 error:&err];
         }
 
