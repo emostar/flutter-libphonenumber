@@ -81,7 +81,7 @@
         NSString *name = @"";
         result(name);
     } else if ([@"format" isEqualToString:call.method]) {
-        NSString *formattedNumber
+        NSString *formattedNumber;
         if (@"NATIONAL" isEqualToString:formatEnumString) {
             formattedNumber = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatNATIONAL error:&err];
         } else if(@"INTERNATIONAL" isEqualToString:formatEnumString) {
