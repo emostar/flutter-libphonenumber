@@ -83,9 +83,9 @@
     } else if([@"format" isEqualToString:call.method]) {
         NSString *format = [self.phoneUtil format:number numberFormat:NBEPhoneNumberFormatNATIONAL error:&err];
         if (err != nil ) {
-            result([FlutterError errorWithCode:@"format_error"
-                                       message:@"Either specified phone number or format is invalid"
-                                       details:nil]);
+            result([FlutterError errorWithCode:[NSString stringWithFormat:@"Error %ld", err.code]
+                                       message:err.domain
+                                       details:err.localizedDescription]);
             return;
         }
         result(format);
