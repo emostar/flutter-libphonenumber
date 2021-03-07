@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
             Padding(
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
-                'Carrier Name=${_carrierName}',
+                'Carrier Name=$_carrierName',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
