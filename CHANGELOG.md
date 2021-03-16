@@ -1,4 +1,4 @@
-## 1.1.0 (20210316)
+## 2.0.0 (20210316)
 
 * nullsafety (https://github.com/emostar/flutter-libphonenumber/pull/27)
 * Update libphonenumber java dep to latest version (8.12.19)
