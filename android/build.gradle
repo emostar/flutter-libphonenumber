@@ -32,7 +32,7 @@ android {
         disable 'InvalidPackage'
     }
     dependencies {
-        api 'com.googlecode.libphonenumber:libphonenumber:8.12.10'
-        api 'com.googlecode.libphonenumber:carrier:1.136'
+        api 'com.googlecode.libphonenumber:libphonenumber:8.12.19'
+        api 'com.googlecode.libphonenumber:carrier:1.145'
     }
 }

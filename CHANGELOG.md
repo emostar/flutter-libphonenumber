@@ -1,3 +1,9 @@
+## 1.1.0 (20210316)
+
+* nullsafety (https://github.com/emostar/flutter-libphonenumber/pull/27)
+* Update libphonenumber java dep to latest version (8.12.19)
+* Update carrier java dep to latest version (1.145)
+
 ## 1.0.2 (20201001)
 
 * Add getNameFromNumber to get the carrier name for a phone number (carrier java dep 1.136)
