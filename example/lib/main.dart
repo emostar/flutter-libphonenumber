@@ -16,7 +16,7 @@ class _MyAppState extends State<MyApp> {
   String _normalized = '';
   RegionInfo? _regionInfo;
   String _carrierName = '';
-
+  String _exampleNumber = '';
   @override
   void dispose() {
     _textController.dispose();
@@ -112,6 +112,19 @@ class _MyAppState extends State<MyApp> {
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
                 'Carrier Name=$_carrierName',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Example'),
+            Padding(
+              padding: EdgeInsets.only(left: 12.0),
+              child: Text(
+                '${_exampleNumber}',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

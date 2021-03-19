@@ -97,6 +97,13 @@ class PhoneNumberUtil {
     }
     return PhoneNumberType.values[result!];    
   }
+
+  static Future<String> getExampleNumber(String isoCode) async {
+    Map<dynamic, dynamic> result = await _channel.invokeMethod('getExampleNumber', {
+      'iso_code': isoCode,
+    });
+    return result['formattedPhoneNumber'].toString();
+  }
   
   static Future<String?> formatAsYouType({
     required String phoneNumber,

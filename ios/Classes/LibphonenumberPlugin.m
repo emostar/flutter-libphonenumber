@@ -73,6 +73,23 @@
                  @"regionCode": countryCode == nil ? @"" : [countryCode stringValue],
                  @"formattedPhoneNumber": formattedNumber == nil ? @"" : formattedNumber,
                  });
+    } else if([@"getExampleNumber" isEqualToString:call.method]) {
+         NBPhoneNumber *exampleNumber = [self.phoneUtil getExampleNumber:isoCode error:&err];
+         NSString *regionCode = [self.phoneUtil getRegionCodeForNumber:exampleNumber];
+         NSString *formattedNumber = [self.phoneUtil format:exampleNumber
+                                                       numberFormat:NBEPhoneNumberFormatNATIONAL
+                                                              error:&err];
+         if (err != nil ) {
+             result([FlutterError errorWithCode:@"invalid_national_number"
+                                        message:@"Invalid phone number for the country specified"
+                                        details:nil]);
+             return;
+         }
+
+         result(@{
+                  @"isoCode": regionCode == nil ? @"" : regionCode,
+                  @"formattedPhoneNumber": formattedNumber == nil ? @"" : formattedNumber,
+                  });
     } else if ([@"getNumberType" isEqualToString:call.method]) {
         NSNumber *numberType = [NSNumber numberWithInteger:[self.phoneUtil getNumberType:number]];
         result(numberType);
