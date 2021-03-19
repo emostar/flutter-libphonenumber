@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
         await PhoneNumberUtil.getRegionInfo(phoneNumber: s, isoCode: 'US');
     String? carrierName =
         await PhoneNumberUtil.getNameForNumber(phoneNumber: s, isoCode: 'US');
-
+    String exampleNumber = await PhoneNumberUtil.getExampleNumber('US');
     setState(() {
       _isValid = isValid??false;
       _normalized = normalizedNumber??"N/A";
