@@ -12,9 +12,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final TextEditingController _textController = TextEditingController();
-  bool _isValid = false;
-  String _normalized = '';
-  RegionInfo _regionInfo;
+  bool? _isValid = false;
+  String? _normalized = '';
+  RegionInfo? _regionInfo;
 
   @override
   void dispose() {
@@ -25,9 +25,9 @@ class _MyAppState extends State<MyApp> {
   _showDetails() async {
     var s = _textController.text;
 
-    bool isValid =
+    bool? isValid =
         await PhoneNumberUtil.isValidPhoneNumber(phoneNumber: s, isoCode: 'US');
-    String normalizedNumber = await PhoneNumberUtil.normalizePhoneNumber(
+    String? normalizedNumber = await PhoneNumberUtil.normalizePhoneNumber(
         phoneNumber: s, isoCode: 'US');
     RegionInfo regionInfo =
         await PhoneNumberUtil.getRegionInfo(phoneNumber: s, isoCode: 'US');
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
             Padding(
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
-                _isValid ? 'YES' : 'NO',
+                _isValid! ? 'YES' : 'NO',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
             Padding(
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
-                _normalized,
+                _normalized!,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
