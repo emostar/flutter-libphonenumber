@@ -1,3 +1,7 @@
+## 2.0.1 (20210613)
+
+* Fix unhandled exception (https://github.com/emostar/flutter-libphonenumber/pull/30)
+
 ## 2.0.0 (20210316)
 
 * nullsafety (https://github.com/emostar/flutter-libphonenumber/pull/27)
