@@ -8,6 +8,8 @@
 
 pubspec.lock
 
+**/flutter_export_environment.sh
+
 # Visual Studio Code related
 .vscode/
 

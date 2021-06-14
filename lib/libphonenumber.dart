@@ -31,7 +31,8 @@ enum PhoneNumberType {
 }
 
 class PhoneNumberUtil {
-  static const MethodChannel _channel = const MethodChannel('codeheadlabs.com/libphonenumber');
+  static const MethodChannel _channel =
+      const MethodChannel('codeheadlabs.com/libphonenumber');
 
   static Future<bool?> isValidPhoneNumber({
     required String phoneNumber,
@@ -59,23 +60,24 @@ class PhoneNumberUtil {
   }
 
   static Future<String?> normalizePhoneNumber({
-      required String phoneNumber,
-      required String isoCode,
-    }) async {
-      return await _channel.invokeMethod('normalizePhoneNumber', {
-        'phone_number': phoneNumber,
-        'iso_code': isoCode,
-      });
-    }
+    required String phoneNumber,
+    required String isoCode,
+  }) async {
+    return await _channel.invokeMethod('normalizePhoneNumber', {
+      'phone_number': phoneNumber,
+      'iso_code': isoCode,
+    });
+  }
 
   static Future<RegionInfo> getRegionInfo({
     required String phoneNumber,
     required String isoCode,
   }) async {
-    Map<dynamic, dynamic> result = await (_channel.invokeMethod('getRegionInfo', {
+    Map<dynamic, dynamic> result =
+        await (_channel.invokeMethod('getRegionInfo', {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
-    }) as FutureOr<Map<dynamic, dynamic>>);
+    }));
 
     return RegionInfo(
       regionPrefix: result['regionCode'],
@@ -95,9 +97,9 @@ class PhoneNumberUtil {
     if (result == -1) {
       return PhoneNumberType.unknown;
     }
-    return PhoneNumberType.values[result!];    
+    return PhoneNumberType.values[result!];
   }
-  
+
   static Future<String?> formatAsYouType({
     required String phoneNumber,
     required String isoCode,
