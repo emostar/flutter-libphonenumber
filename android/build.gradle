@@ -4,18 +4,18 @@ version '1.0-SNAPSHOT'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:3.5.4'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
@@ -32,7 +32,7 @@ android {
         disable 'InvalidPackage'
     }
     dependencies {
-        api 'com.googlecode.libphonenumber:libphonenumber:8.12.19'
-        api 'com.googlecode.libphonenumber:carrier:1.145'
+        api 'com.googlecode.libphonenumber:libphonenumber:8.12.32'
+        api 'com.googlecode.libphonenumber:carrier:1.158'
     }
 }
