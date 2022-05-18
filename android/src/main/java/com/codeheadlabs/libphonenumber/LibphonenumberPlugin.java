@@ -55,6 +55,9 @@ public class LibphonenumberPlugin implements MethodCallHandler, FlutterPlugin {
       case "getNumberType":
         handleGetNumberType(call, result);
         break;
+      case "getExampleNumber":
+        handleGetExampleNumber(call, result);
+        break;
       case "formatAsYouType":
         formatAsYouType(call, result);
         break;
@@ -139,6 +142,19 @@ public class LibphonenumberPlugin implements MethodCallHandler, FlutterPlugin {
     } catch (NumberParseException e) {
       result.error("NumberParseException", e.getMessage(), null);
     }
+  }
+
+  private void handleGetExampleNumber(MethodCall call, Result result) {
+    final String isoCode = call.argument("iso_code");
+    Phonenumber.PhoneNumber p = phoneUtil.getExampleNumber(isoCode);
+    String regionCode = phoneUtil.getRegionCodeForNumber(p);
+    String formattedNumber = phoneUtil.format(p, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);
+
+    Map<String, String> resultMap = new HashMap<String, String>();
+    resultMap.put("isoCode", regionCode);
+    resultMap.put("formattedPhoneNumber", formattedNumber);
+    result.success(resultMap);
+
   }
 
   private void handleGetNumberType(MethodCall call, Result result) {
