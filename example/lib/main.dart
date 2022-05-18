@@ -17,6 +17,8 @@ class _MyAppState extends State<MyApp> {
   RegionInfo? _regionInfo;
   String _carrierName = '';
   String _exampleNumber = '';
+  Map<PhoneNumberFormat, String> _numberMap = <PhoneNumberFormat, String>{};
+
   @override
   void dispose() {
     _textController.dispose();
@@ -35,10 +37,24 @@ class _MyAppState extends State<MyApp> {
     String? carrierName =
         await PhoneNumberUtil.getNameForNumber(phoneNumber: s, isoCode: 'US');
     String exampleNumber = await PhoneNumberUtil.getExampleNumber('US');
+
+    final Map<PhoneNumberFormat, String> numberMap =
+        <PhoneNumberFormat, String>{};
+    for (var format in PhoneNumberFormat.values) {
+      final String formattedNumber = await PhoneNumberUtil.format(
+        format: format,
+        phoneNumber: s,
+        isoCode: 'US',
+        removeSpacesBetweenDigits: false,
+      );
+      numberMap[format] = formattedNumber;
+    }
+
     setState(() {
       _isValid = isValid??false;
       _normalized = normalizedNumber??"N/A";
       _regionInfo = regionInfo;
+      _numberMap = numberMap;
       _carrierName = carrierName??"N/A";
     });
   }
@@ -81,7 +97,7 @@ class _MyAppState extends State<MyApp> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('E164 Format:'),
+            Text('Normalized:'),
             Padding(
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
@@ -90,6 +106,17 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ],
+        ),
+        Column(
+          children: _numberMap.entries
+              .map<Widget>(
+                (MapEntry<PhoneNumberFormat, String> entry) =>
+                    _NumberFormatEntry(
+                  format: entry.key,
+                  formattedNumber: entry.value,
+                ),
+              )
+              .toList(),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -156,6 +183,37 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _NumberFormatEntry extends StatelessWidget {
+  const _NumberFormatEntry({Key key, this.format, this.formattedNumber})
+      : super(key: key);
+  final PhoneNumberFormat format;
+  final String formattedNumber;
+
+  @override
+  Widget build(BuildContext context) {
+    final String rawEnumString = format.toString();
+    final String formatDisplayValue =
+        rawEnumString.substring(rawEnumString.lastIndexOf('.') + 1);
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text('$formatDisplayValue Format:'),
+          Padding(
+            padding: EdgeInsets.only(left: 12.0),
+            child: Text(
+              formattedNumber ?? '',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }

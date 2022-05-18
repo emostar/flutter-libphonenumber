@@ -15,6 +15,13 @@ class RegionInfo {
   }
 }
 
+enum PhoneNumberFormat {
+    E164,
+    INTERNATIONAL,
+    NATIONAL,
+    RFC3966
+}
+
 enum PhoneNumberType {
   fixedLine,
   mobile,
@@ -31,7 +38,8 @@ enum PhoneNumberType {
 }
 
 class PhoneNumberUtil {
-  static const MethodChannel _channel = const MethodChannel('codeheadlabs.com/libphonenumber');
+  static const MethodChannel _channel =
+      const MethodChannel('codeheadlabs.com/libphonenumber');
 
   static Future<bool?> isValidPhoneNumber({
     required String phoneNumber,
@@ -59,23 +67,24 @@ class PhoneNumberUtil {
   }
 
   static Future<String?> normalizePhoneNumber({
-      required String phoneNumber,
-      required String isoCode,
-    }) async {
-      return await _channel.invokeMethod('normalizePhoneNumber', {
-        'phone_number': phoneNumber,
-        'iso_code': isoCode,
-      });
-    }
+    required String phoneNumber,
+    required String isoCode,
+  }) async {
+    return await _channel.invokeMethod('normalizePhoneNumber', {
+      'phone_number': phoneNumber,
+      'iso_code': isoCode,
+    });
+  }
 
   static Future<RegionInfo> getRegionInfo({
     required String phoneNumber,
     required String isoCode,
   }) async {
-    Map<dynamic, dynamic> result = await (_channel.invokeMethod('getRegionInfo', {
+    Map<dynamic, dynamic> result =
+        await (_channel.invokeMethod('getRegionInfo', {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
-    }) as FutureOr<Map<dynamic, dynamic>>);
+    }));
 
     return RegionInfo(
       regionPrefix: result['regionCode'],
@@ -95,7 +104,7 @@ class PhoneNumberUtil {
     if (result == -1) {
       return PhoneNumberType.unknown;
     }
-    return PhoneNumberType.values[result!];    
+    return PhoneNumberType.values[result!];
   }
 
   static Future<String> getExampleNumber(String isoCode) async {
@@ -113,5 +122,31 @@ class PhoneNumberUtil {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
     });
+  }
+
+  static Future<String> format({
+    @required String phoneNumber,
+    @required String isoCode,
+    @required PhoneNumberFormat format,
+    // If true, this removes the spaces between the digits in the number formats
+    // that add them.
+    bool removeSpacesBetweenDigits = true,
+  }) async {
+    final String formatString = format?.toString();
+    if(formatString == null || formatString.isEmpty) {
+      return phoneNumber;
+    }
+
+    final String formattedPhoneNumber = await _channel.invokeMethod('format', {
+          'phone_number': phoneNumber,
+          'iso_code': isoCode,
+          'format': formatString.substring(formatString.indexOf('.') + 1)
+    });
+    
+    if(removeSpacesBetweenDigits) {
+      return formattedPhoneNumber.replaceAll(' ', '');
+    } else {
+      return formattedPhoneNumber;
+    }
   }
 }

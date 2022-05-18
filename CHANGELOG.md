@@ -1,3 +1,12 @@
+## 2.0.2 (20210912)
+* Switch to v2 Android embedding
+* Update libphonenumber java dep to latest version (8.12.32)
+* Update carrier java dep to latest version (1.158)
+
+## 2.0.1 (20210613)
+
+* Fix unhandled exception (https://github.com/emostar/flutter-libphonenumber/pull/30)
+
 ## 2.0.0 (20210316)
 
 * nullsafety (https://github.com/emostar/flutter-libphonenumber/pull/27)
