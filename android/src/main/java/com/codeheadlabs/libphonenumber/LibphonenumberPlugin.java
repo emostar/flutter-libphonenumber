@@ -61,6 +61,9 @@ public class LibphonenumberPlugin implements MethodCallHandler, FlutterPlugin {
       case "getNameForNumber":
         handleGetNameForNumber(call, result);
         break;
+      case "format":
+        handleFormat(call, result);
+        break;
       default:
         result.notImplemented();
         break;
@@ -76,6 +79,20 @@ public class LibphonenumberPlugin implements MethodCallHandler, FlutterPlugin {
       result.success(phoneNumberToCarrierMapper.getNameForNumber(p, Locale.getDefault()));
     } catch (NumberParseException e) {
       result.error("NumberParseException", e.getMessage(), null);
+    }
+  }
+
+  private void handleFormat(MethodCall call, Result result) {
+    final String phoneNumber = call.argument("phone_number");
+    final String isoCode = call.argument("iso_code");
+    final String format = call.argument("format");
+
+    try {
+      Phonenumber.PhoneNumber p = phoneUtil.parse(phoneNumber, isoCode.toUpperCase());
+      PhoneNumberUtil.PhoneNumberFormat phoneNumberFormat = PhoneNumberUtil.PhoneNumberFormat.valueOf(format);
+      result.success(phoneUtil.format(p, phoneNumberFormat));
+    } catch (Exception e) {
+      result.error("Exception", e.getMessage(), null);
     }
   }
 

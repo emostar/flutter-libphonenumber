@@ -15,6 +15,13 @@ class RegionInfo {
   }
 }
 
+enum PhoneNumberFormat {
+    E164,
+    INTERNATIONAL,
+    NATIONAL,
+    RFC3966
+}
+
 enum PhoneNumberType {
   fixedLine,
   mobile,
@@ -108,5 +115,31 @@ class PhoneNumberUtil {
       'phone_number': phoneNumber,
       'iso_code': isoCode,
     });
+  }
+
+  static Future<String> format({
+    @required String phoneNumber,
+    @required String isoCode,
+    @required PhoneNumberFormat format,
+    // If true, this removes the spaces between the digits in the number formats
+    // that add them.
+    bool removeSpacesBetweenDigits = true,
+  }) async {
+    final String formatString = format?.toString();
+    if(formatString == null || formatString.isEmpty) {
+      return phoneNumber;
+    }
+
+    final String formattedPhoneNumber = await _channel.invokeMethod('format', {
+          'phone_number': phoneNumber,
+          'iso_code': isoCode,
+          'format': formatString.substring(formatString.indexOf('.') + 1)
+    });
+    
+    if(removeSpacesBetweenDigits) {
+      return formattedPhoneNumber.replaceAll(' ', '');
+    } else {
+      return formattedPhoneNumber;
+    }
   }
 }
