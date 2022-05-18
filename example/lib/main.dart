@@ -14,7 +14,7 @@ class _MyAppState extends State<MyApp> {
   final TextEditingController _textController = TextEditingController();
   bool _isValid = false;
   String _normalized = '';
-  RegionInfo _regionInfo;
+  RegionInfo? _regionInfo;
   String _carrierName = '';
   Map<PhoneNumberFormat, String> _numberMap = <PhoneNumberFormat, String>{};
 
@@ -27,13 +27,13 @@ class _MyAppState extends State<MyApp> {
   _showDetails() async {
     var s = _textController.text;
 
-    bool isValid =
+    bool? isValid =
         await PhoneNumberUtil.isValidPhoneNumber(phoneNumber: s, isoCode: 'US');
-    String normalizedNumber = await PhoneNumberUtil.normalizePhoneNumber(
+    String? normalizedNumber = await PhoneNumberUtil.normalizePhoneNumber(
         phoneNumber: s, isoCode: 'US');
     RegionInfo regionInfo =
         await PhoneNumberUtil.getRegionInfo(phoneNumber: s, isoCode: 'US');
-    String carrierName =
+    String? carrierName =
         await PhoneNumberUtil.getNameForNumber(phoneNumber: s, isoCode: 'US');
 
     final Map<PhoneNumberFormat, String> numberMap =
@@ -49,11 +49,11 @@ class _MyAppState extends State<MyApp> {
     }
 
     setState(() {
-      _isValid = isValid;
-      _normalized = normalizedNumber;
+      _isValid = isValid??false;
+      _normalized = normalizedNumber??"N/A";
       _regionInfo = regionInfo;
-      _carrierName = carrierName;
       _numberMap = numberMap;
+      _carrierName = carrierName??"N/A";
     });
   }
 
@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
             Padding(
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
-                'Carrier Name=${_carrierName}',
+                'Carrier Name=$_carrierName',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),

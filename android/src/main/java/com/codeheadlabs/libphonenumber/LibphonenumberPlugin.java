@@ -1,5 +1,8 @@
 package com.codeheadlabs.libphonenumber;
 
+import androidx.annotation.NonNull;
+
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -12,18 +15,26 @@ import com.google.i18n.phonenumbers.PhoneNumberToCarrierMapper;
 import com.google.i18n.phonenumbers.PhoneNumberUtil;
 import com.google.i18n.phonenumbers.Phonenumber;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
 /** LibphonenumberPlugin */
-public class LibphonenumberPlugin implements MethodCallHandler {
+public class LibphonenumberPlugin implements MethodCallHandler, FlutterPlugin {
   private static PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
   private static PhoneNumberToCarrierMapper phoneNumberToCarrierMapper = PhoneNumberToCarrierMapper.getInstance();
 
-  /** Plugin registration. */
+  @Override
+  public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+    final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "codeheadlabs.com/libphonenumber");
+    channel.setMethodCallHandler(new LibphonenumberPlugin());
+  }
+
+  @Override
+  public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+  }
+
+  /** Keeping around to support older apps that aren't using v2 Android embedding */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "codeheadlabs.com/libphonenumber");
     channel.setMethodCallHandler(new LibphonenumberPlugin());
