@@ -6,6 +6,7 @@
 * Update libphonenumber java dep to latest version (8.13.15)
 * Update carrier java dep to latest version (1.199)
 * Update Flutter version minimum to 3.0.0
+* Update example Gradle 8.0.2
 
 ## 2.0.2 (20210912)
 
