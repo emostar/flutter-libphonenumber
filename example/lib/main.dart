@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/services.dart';
 import 'package:libphonenumber/libphonenumber.dart';
 
 void main() => runApp(new MyApp());
@@ -51,11 +50,12 @@ class _MyAppState extends State<MyApp> {
     }
 
     setState(() {
-      _isValid = isValid??false;
-      _normalized = normalizedNumber??"N/A";
+      _isValid = isValid ?? false;
+      _normalized = normalizedNumber ?? "N/A";
       _regionInfo = regionInfo;
       _numberMap = numberMap;
-      _carrierName = carrierName??"N/A";
+      _carrierName = carrierName ?? "N/A";
+      _exampleNumber = exampleNumber;
     });
   }
 
@@ -151,7 +151,7 @@ class _MyAppState extends State<MyApp> {
             Padding(
               padding: EdgeInsets.only(left: 12.0),
               child: Text(
-                '${_exampleNumber}',
+                '$_exampleNumber',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
@@ -189,8 +189,8 @@ class _MyAppState extends State<MyApp> {
 }
 
 class _NumberFormatEntry extends StatelessWidget {
-  const _NumberFormatEntry({Key key, this.format, this.formattedNumber})
-      : super(key: key);
+  const _NumberFormatEntry(
+      {required this.format, required this.formattedNumber});
   final PhoneNumberFormat format;
   final String formattedNumber;
 
@@ -209,7 +209,7 @@ class _NumberFormatEntry extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 12.0),
             child: Text(
-              formattedNumber ?? '',
+              formattedNumber,
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
