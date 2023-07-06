@@ -1,12 +1,12 @@
 name: libphonenumber
 description: This is a Flutter implementation of libphonenumber. It includes only a few features at the moment, and are added when more functionality is desired.
-version: 2.0.2
+version: 3.0.0
 homepage: https://github.com/emostar/flutter-libphonenumber
 
 dependencies:
   flutter:
     sdk: flutter
-  meta: ^1.3.0
+  meta: 1.9.1
 
 flutter:
   plugin:
@@ -18,5 +18,5 @@ flutter:
         pluginClass: LibphonenumberPlugin
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=2.0.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
