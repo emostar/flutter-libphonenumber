@@ -6,7 +6,7 @@ homepage: https://github.com/emostar/flutter-libphonenumber
 dependencies:
   flutter:
     sdk: flutter
-  meta: 1.9.1
+  meta: ^1.15.0
 
 flutter:
   plugin:
