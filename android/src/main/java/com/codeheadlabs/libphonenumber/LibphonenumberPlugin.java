@@ -7,7 +7,6 @@ import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import com.google.i18n.phonenumbers.AsYouTypeFormatter;
 import com.google.i18n.phonenumbers.NumberParseException;
@@ -19,25 +18,54 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-/** LibphonenumberPlugin */
-public class LibphonenumberPlugin implements MethodCallHandler, FlutterPlugin {
+/**
+ * LibphonenumberPlugin
+ * 
+ * A Flutter plugin for native phone number functionality on Android.
+ * Implements the new Flutter Plugin API (v2) while maintaining backward compatibility.
+ */
+public class LibphonenumberPlugin implements FlutterPlugin, MethodCallHandler {
+  private static final String CHANNEL_NAME = "codeheadlabs.com/libphonenumber";
+
+  // The MethodChannel used to communicate with the Flutter engine
+  private MethodChannel channel;
+
+  // PhoneNumberUtil instance used for phone number operations
   private static PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+
+  // Mapper to get carrier information for phone numbers
   private static PhoneNumberToCarrierMapper phoneNumberToCarrierMapper = PhoneNumberToCarrierMapper.getInstance();
 
+  /**
+   * Plugin registration method for apps using the v2 embedding
+   */
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-    final MethodChannel channel = new MethodChannel(binding.getBinaryMessenger(), "codeheadlabs.com/libphonenumber");
-    channel.setMethodCallHandler(new LibphonenumberPlugin());
+    setupChannel(binding.getBinaryMessenger());
   }
 
+  /**
+   * Clean up resources when the plugin is detached from the engine
+   */
   @Override
   public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+    teardownChannel();
   }
 
-  /** Keeping around to support older apps that aren't using v2 Android embedding */
-  public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "codeheadlabs.com/libphonenumber");
-    channel.setMethodCallHandler(new LibphonenumberPlugin());
+  /**
+   * Sets up the method channel and registers this instance as the handler
+   */
+  private void setupChannel(Object messenger) {
+    channel = new MethodChannel((io.flutter.plugin.common.BinaryMessenger) messenger, CHANNEL_NAME);
+    channel.setMethodCallHandler(this);
+  }
+
+  /**
+   * Cleans up the method channel
+   */
+  private void teardownChannel() {
+    channel.setMethodCallHandler(null);
+    channel = null;
   }
 
   @Override
